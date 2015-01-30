@@ -1,0 +1,11 @@
+<ion-list ng-show="loaded">
+    <ion-item ng-repeat="story in stories" ng-href="#/app/feeds/{{feed}}/{{$index}}">
+        <div class="feed-title">{{story.title}}</div>
+        <div class="feed-body">{{cleanSnippet(story.contentSnippet)}}</div>
+        <h5>{{formatDate(story.publishedDate)}}</h5>
+    </ion-item>
+</ion-list>
+<div ng-show="failed">
+    <p class="connection-failed"><a class="button icon-left ion-refresh button-clear button-dark connection-failed" ng-click="reload()">{{errorMessage}}, Push to Refresh</a>
+    </p>
+</div>

@@ -1,0 +1,42 @@
+<ion-side-menus>
+  <ion-pane ion-side-menu-content>
+    <ion-nav-bar class="bar-calm nav-title-slide-ios7" id="header">          
+      <ion-nav-back-button class="button button-icon" animation="no-animation"><i class="icon ion-ios7-arrow-back"></i>Back</ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>    
+  </ion-pane>
+  <ion-side-menu side="left" id="side-menu" expose-aside-when="large">
+    <header class="bar bar-header">
+      <h1 class="title">USAID News Feeds</h1>
+    </header>
+    <ion-content id="menuBackground" class="has-header">
+    <!--<ion-content id="menuBackground">-->
+      <ion-list>        
+        <ion-item nav-clear menu-close href="#/app/feeds/releases">
+          USAID Press Releases
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/feeds/frontlines">
+          FrontLines
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/feeds/blogs">
+          Impact Blog
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/feeds/facts">
+          Fact Sheets
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/feeds/speeches">
+         Administrator Speeches
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/feeds/testimonies">
+          Congressional Testimonies
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/feeds/vacancies">
+          Vacancy Announcements
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/twitter">
+          Twitter
+        </ion-item>        
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

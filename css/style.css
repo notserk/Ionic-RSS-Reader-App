@@ -1,0 +1,174 @@
+/* Empty. Add your own CSS if you like */
+/*Header elements*/
+
+@import url(http://fonts.googleapis.com/css?family=Abel);
+
+body, h1, h2{
+    font-family: 'Abel', sans-serif;;
+}
+
+#header{
+	background-color: white;
+	color: #C2113A;
+	background: linear-gradient(#cccccc, #f2f2f2);
+}
+
+#header h1{
+	color: #FFFFFF;
+}
+
+#header > div.buttons{
+	background-color: grey;
+}
+
+#header > .back-button{
+	background-color: grey;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+#footer{
+    background: linear-gradient(#cccccc, #f2f2f2);
+}
+
+/*Subheader elements*/
+.bar-subheader{
+	background-color: #000000;
+}
+
+.bar-subheader > h1{
+	color: white;
+}
+
+#side-menu > header > h1{
+	color: #ffffff;
+}
+
+#side-menu > header, #side-menu{
+	background-color: black;
+	font-family: 'Abel',Arial,sans-serif;
+	font-weight: bold;
+}
+
+#menuBackground > div > ion-list > div > ion-item > a{
+	background: black !important;
+	color: #ffffff;
+}
+
+
+
+/*Logo styles primarily for positioning*/
+.logo {
+	margin-top: 3px;
+	height: 40px;
+    width: 125px
+}
+
+.beta-label{
+	position: absolute;
+	color: #000000;
+	right: 42%;
+	top: 30%;
+}
+
+
+/*Deprecated*/
+#loading{
+	/*position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;*/
+  font-size: 60px; 
+}
+
+
+/*Styles for Feed Story elements*/
+#feedStory{
+	background-color: black;
+	color: #DDDDDD;
+	font-family: 'Abel',Arial,sans-serif;
+}
+
+#feedStory a {
+	color: #DDDDDD;
+}
+
+/*Feed Title*/
+.feed-title{
+	text-decoration: none;
+	color: black;
+	font-size: 11px;
+	font-weight: bold;
+	white-space: normal;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+/*Feed Body */
+.feed-body{
+	text-decoration: none;
+	font-size: 12px;
+	color: grey;
+	font-weight: bold;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+/*Style for Press Releases*/
+.pressHeadline {
+	/*white-space: pre-wrap !important;*/
+	text-decoration: none;
+	color: black;
+	font-size: 16px;
+	font-weight: bold;
+	white-space: normal;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.pressContent p {
+	font-size: 12px;
+	color: grey;
+}
+
+.pressDate span {
+	font-size: 10px;
+	color: grey;
+}
+
+.connection-failed{
+	margin: 0 auto;
+	text-align: center;
+}
+
+.connection-failed > p{
+	text-align: center;
+}
+
+/*Style for Frontlines*/
+.feed-title{
+	text-decoration: none;
+	color: black;
+	font-size: 16px;
+    font-family: 'Abel',Arial,sans-serif;
+	font-weight: bold;
+	white-space: normal;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.article-body div{
+    padding: 0px 3px 0px 3px;
+}
+
+.article-title{
+    color: #ffffff;
+}
+
+#footer a{
+    display: block;
+    padding: 5px 50px 10px 50px;
+}
+

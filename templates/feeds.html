@@ -1,0 +1,49 @@
+<ion-view title='<img class="logo" src="./img/USAID-logo3.png">' id="header">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-header-bar class="bar-subheader">
+    <!--Uncomment when pushing to device-->
+    <!--<h1 class="title" ng-bind="networkStats ? feedTitle : feedTitle + ' (Offline)'"></h1>-->
+    <h1 class="title">{{feedTitle}}</h1>
+  </ion-header-bar>
+  <ion-content has-header="true" has-subheader="true">
+    <!--<center><i ng-show="loader()" id="loading" class="ion-refreshing"></i></center>-->
+    <!--<ion-list>-->
+    <!--<ion-item ng-class="{pressReleases: class}" ng-repeat="story in stories" ng-href="#/app/feeds/{{feed}}/{{$index}}">-->
+    <!--&lt;!&ndash; <a>{{story.title}}</a>-->
+    <!--<h3>{{story.publishedDate | date:'yyyy'}}</h3> &ndash;&gt;-->
+    <!--<p ng-bind-html="parseHTML(story.content)"></p>-->
+    <!--</ion-item>-->
+    <!--</ion-list>-->
+    <div ng-switch="feed">
+      <press-release ng-switch-when="releases"></press-release>
+      <front-lines ng-switch-when='frontlines'></front-lines>
+      <impact-blog ng-switch-when='blogs'></impact-blog>
+      <fact-sheets ng-switch-when='facts'></fact-sheets>
+      <speeches ng-switch-when='speeches'></speeches>
+      <vacancies ng-switch-when='vacancies'></vacancies>
+      <testimonies ng-switch-when='testimonies'></testimonies>
+      <twitter ng-switch-when='twitter'></twitter>
+    </div>
+    <!-- <ul class="list">
+      <li ng-repeat="story in stories" ng-href="#/app/feeds/{{feed}}/{{$index}}" class="item">
+        <div ng-bind-html="story.content"></div>
+      </li>
+    </ul> -->
+  </ion-content>
+  <!--<div class="tabs tabs-icon-top">-->
+  <!--<a class="tab-item">-->
+  <!--<i class="icon ion-home"></i>-->
+  <!--Home-->
+  <!--</a>-->
+  <!--<a class="tab-item">-->
+  <!--<i class="icon ion-star"></i>-->
+  <!--Favorites-->
+  <!--</a>-->
+  <!--<a class="tab-item">-->
+  <!--<i class="icon ion-gear-a"></i>-->
+  <!--Settings-->
+  <!--</a>-->
+  <!--</div>-->
+</ion-view>

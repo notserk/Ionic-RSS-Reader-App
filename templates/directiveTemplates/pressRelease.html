@@ -1,0 +1,22 @@
+<div ng-if="loaded">
+    <!--<ion-refresher-->
+            <!--pulling-text="Pull to refresh..."-->
+            <!--on-refresh="doRefresh()">-->
+    <!--</ion-refresher>-->
+    <ion-list >
+        <ion-item ng-class="{pressReleases: class}" ng-repeat="story in stories" ng-href="#/app/feeds/{{feed}}/{{$index}}">
+            <!-- <a>{{story.title}}</a>
+            <h3>{{story.publishedDate | date:'yyyy'}}</h3> -->
+            <!--<p ng-bind-html="parseHTML(story.content)"></p>-->
+            <!--<div class="pressHeadline" ng-bind-html="parseHTML(story.content)[1]"></div>-->
+            <div class="pressHeadline">{{story.title}}</div>
+            <div class="pressContent"  ng-bind-html="parseHTML(story.content)[3]"></div>
+            <!--<div class="pressDate" ng-bind-html="parseHTML(story.content)[2]"></div>-->
+            <h5>{{formatDate(story.publishedDate)}}</h5>
+        </ion-item>
+    </ion-list>
+</div>
+<div ng-if="failed">
+    <p class="connection-failed"><a class="button icon-left ion-refresh button-clear button-dark connection-failed" ng-click="reload()">Connection Failed, Push to Refresh</a>
+    </p>
+</div>

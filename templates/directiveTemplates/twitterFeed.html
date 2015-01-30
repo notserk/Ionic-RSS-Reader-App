@@ -1,0 +1,9 @@
+<ion-header-bar class="bar-subheader">
+    <h1 class="title">{{feedTitle}}</h1>
+</ion-header-bar>
+<ion-list>
+    <ion-item ng-repeat="story in stories" ng-href="#/app/feeds/{{feed}}/{{$index}}">
+        <a>{{story.title}}</a>
+        <!--<h3>{{story.publishedDate | date:'yyyy'}}</h3>-->
+    </ion-item>
+</ion-list>

@@ -1,0 +1,15 @@
+<ion-view>
+	<ion-header-bar class="bar-subheader">
+    	<h1 class="title">{{feedTitle}}</h1>
+  	</ion-header-bar>
+	<ion-content id="feedStory" class="has-header">
+		<!--<center><i ng-show="loader()" id="loading" class="ion-refreshing"></i></center>-->    
+		<div ng-bind-html="stories" add-target modify-title class="article-body"></div>
+		<!--<div ng-show="link">-->
+            <!--<a ng-href="{{link}}">Read More</a>-->
+        <!--</div>-->
+	</ion-content>
+    <ion-footer-bar ng-show="link" id="footer" align-title="center" class="bar-light">
+        <h1 class="title"><a open-window ng-href="{{link}}" class="button button-clear">Read More</a></h1>
+    </ion-footer-bar>
+</ion-view>
