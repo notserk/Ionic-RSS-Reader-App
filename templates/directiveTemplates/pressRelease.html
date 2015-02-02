@@ -1,8 +1,8 @@
 <div ng-if="loaded">
-    <!--<ion-refresher-->
-            <!--pulling-text="Pull to refresh..."-->
-            <!--on-refresh="doRefresh()">-->
-    <!--</ion-refresher>-->
+    <ion-refresher
+            pulling-text="Pull to refresh..."
+            on-refresh="reloadFeed()">
+    </ion-refresher>
     <ion-list >
         <ion-item ng-class="{pressReleases: class}" ng-repeat="story in stories" ng-href="#/app/feeds/{{feed}}/{{$index}}">
             <!-- <a>{{story.title}}</a>

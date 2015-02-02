@@ -1,4 +1,8 @@
 <ion-list ng-show="loaded">
+    <ion-refresher
+            pulling-text="Pull to refresh..."
+            on-refresh="reloadFeed()">
+    </ion-refresher>
     <ion-item ng-repeat="story in stories" ng-href="#/app/feeds/{{feed}}/{{$index}}">
         <div class="feed-title">{{story.title}}</div>
         <div class="feed-body">{{cleanSnippet(story.contentSnippet)}}</div>
