@@ -12,7 +12,7 @@ angular.module('articleController', ['FeedUtilities', 'RSSFeedService'])
     {
         case 'administrator':
             //The administrator feed needed no formatting!
-            FeedService.parseFeed('http://www.usaid.gov/rss/1891/related_content.xml')
+            FeedService.parseFeed('http://www.usaid.gov/rss/1891/related_content.xml', feed)
                 .then(function(response){
                     $scope.stories = response[id].content;
                     $scope.feedTitle = response[id].title;
@@ -25,7 +25,7 @@ angular.module('articleController', ['FeedUtilities', 'RSSFeedService'])
         case 'releases':
             //Formatting needed to get rid of "Language Undefined" and
             //add proper USAID link.
-            FeedService.parseFeed('http://www.usaid.gov/rss/press-releases.xml')
+            FeedService.parseFeed('http://www.usaid.gov/rss/press-releases.xml', feed)
                 .then(function(response){
                     var html =  response[id].content;
                     $scope.stories = Util.FormatHTML(html);
@@ -37,7 +37,7 @@ angular.module('articleController', ['FeedUtilities', 'RSSFeedService'])
             break;
 
         case 'frontlines':
-            FeedService.parseFeed('http://www.usaid.gov/news-information/frontlines/46331/rss/')
+            FeedService.parseFeed('http://www.usaid.gov/news-information/frontlines/46331/rss/', feed)
                 .then(function(response){
                     var html = response[id].content;
                     $scope.stories = Util.FormatHTML(html);
@@ -50,7 +50,7 @@ angular.module('articleController', ['FeedUtilities', 'RSSFeedService'])
             break;
 
         case 'vacancies':
-            FeedService.parseFeed('http://www.usaid.gov/work-with-us/careers/vacancy-announcements.xml')
+            FeedService.parseFeed('http://www.usaid.gov/work-with-us/careers/vacancy-announcements.xml', feed)
                 .then(function(response){
                     var html = response[id].content;
                     $scope.stories = Util.FormatHTML(html);
@@ -63,7 +63,7 @@ angular.module('articleController', ['FeedUtilities', 'RSSFeedService'])
             break;
 
         case 'testimonies':
-            FeedService.parseFeed('http://www.usaid.gov/rss/congressional-testimony.xml')
+            FeedService.parseFeed('http://www.usaid.gov/rss/congressional-testimony.xml', feed)
                 .then(function(response){
                     var html = response[id].content;
                     $scope.stories = Util.FormatHTML(html);
@@ -76,7 +76,7 @@ angular.module('articleController', ['FeedUtilities', 'RSSFeedService'])
             break;
 
         case 'speeches':
-            FeedService.parseFeed('http://www.usaid.gov/rss/speeches.xml')
+            FeedService.parseFeed('http://www.usaid.gov/rss/speeches.xml', feed)
                 .then(function(response){
                     var html = response[id].content;
                     $scope.stories = Util.FormatHTML(html);
@@ -89,7 +89,7 @@ angular.module('articleController', ['FeedUtilities', 'RSSFeedService'])
             break;
 
         case 'facts':
-            FeedService.parseFeed('http://www.usaid.gov/rss/fact-sheets.xml')
+            FeedService.parseFeed('http://www.usaid.gov/rss/fact-sheets.xml', feed)
                 .then(function(response){
                     var html = response[id].content;
                     $scope.stories = Util.FormatHTML(html);
@@ -108,7 +108,7 @@ angular.module('articleController', ['FeedUtilities', 'RSSFeedService'])
             break;
 
         case 'blogs':
-            FeedService.parseFeed('http://blog.usaid.gov/feed/')
+            FeedService.parseFeed('http://blog.usaid.gov/feed/', feed)
                 .then(function(response){
                     var html = response[id].content;
                     $scope.stories = Util.FormatHTML(html);
@@ -125,4 +125,4 @@ angular.module('articleController', ['FeedUtilities', 'RSSFeedService'])
                 });
             break;
     }
-})
+});

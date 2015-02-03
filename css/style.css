@@ -159,8 +159,9 @@ body, h1, h2{
 	overflow: hidden;
 }
 
-.article-body div{
+.article-body div, .article-body p{
     padding: 0px 3px 0px 3px;
+    font-size: 14px;
 }
 
 .article-title{
@@ -172,3 +173,8 @@ body, h1, h2{
     padding: 5px 50px 10px 50px;
 }
 
+@media (max-width: 1023px){
+    #header > div.buttons{
+        display: none;
+    }
+}

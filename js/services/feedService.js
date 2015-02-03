@@ -1,27 +1,26 @@
 angular.module('RSSFeedService', [])
     .factory('FeedService',function($http, $q, DSCacheFactory, $cordovaNetwork){
         return {
-            parseFeed : function(url){
+            parseFeed : function(url, feed){
 
                 var deferred = $q.defer();
                 var cacheFeed = DSCacheFactory.get("FeedStorage");
 
                 //Check if cache exists, if not then fetch data via http.
-                if(cacheFeed.get(url)){
-                    deferred.resolve(cacheFeed.get(url));
-                    console.log("Data from cache", cacheFeed.get(url));
+                if(cacheFeed.get(feed))
+                {
+                    deferred.resolve(cacheFeed.get(feed));
                 }
-
-                else{
+                else
+                {
                     $http.jsonp('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&callback=JSON_CALLBACK&q=' + encodeURIComponent(url),
                         {
                             timeout: 9000
                             //timeout: 1000
                         })
                         .then(function(response){
-                            cacheFeed.put(url, response.data.responseData.feed.entries);
-                            console.dir(response);
-                            deferred.resolve(cacheFeed.get(url));
+                            cacheFeed.put(feed, response.data.responseData.feed.entries);
+                            deferred.resolve(cacheFeed.get(feed));
                         }, function(error){
                             deferred.reject('Connection Failed');
                         });
@@ -30,10 +29,6 @@ angular.module('RSSFeedService', [])
             },
 
             getAllFeeds: function(){
-
-
-                var cacheFeed = DSCacheFactory.get("FeedStorage");
-
 
                 var urls = [
                     {
@@ -66,25 +61,28 @@ angular.module('RSSFeedService', [])
                     }
                 ];
 
-                var promises = [];
+                var promiseObject = {};
+
 
                 angular.forEach(urls, function(url){
                     var deffered = $q.defer();
                     $http.jsonp('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&callback=JSON_CALLBACK&q=' + encodeURIComponent(url.url), {
-                        timeout: 9000
+                        timeout: 15000
                         //timeout: 1000
                     })
                     .then(function(response){
-                        cacheFeed.put(url.name, response.data.responseData.feed.entries);
-                        deffered.resolve(cacheFeed.get(url.name));
+                        //cacheFeed.put(url.name, response.data.responseData.feed.entries);
+                        deffered.resolve(response.data.responseData.feed.entries);
+
                     }, function(error){
                         deffered.reject(error);
                     });
 
-                    promises.push(deffered.promise);
+                    //promises.push(deffered.promise);
+                    promiseObject[url.name] = deffered.promise;
                 });
 
-                return $q.all(promises);
+                return $q.all(promiseObject);
             },
 
             reloadFeed: function(name, url){

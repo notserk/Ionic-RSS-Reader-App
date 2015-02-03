@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('news', ['ionic', 'TwitterCtrl', 'FeedController', 'articleController', 'ngSanitize', 'feedDirectives', 'angular-data.DSCacheFactory', 'ngCordova'])
 
-.run(function($ionicPlatform, DSCacheFactory) {
+.run(function($ionicPlatform, DSCacheFactory, $rootScope, $cordovaNetwork) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,7 +18,14 @@ angular.module('news', ['ionic', 'TwitterCtrl', 'FeedController', 'articleContro
     }
   });
 
-  //$cordovaSplashscreen.hide();
+    // listen for Offline event
+    $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+        var offlineState = networkState;
+        alert(offlineState);
+    });
+
+
+        //$cordovaSplashscreen.hide();
   DSCacheFactory("FeedStorage",
   {
     storageMode: "localStorage",
@@ -26,6 +33,8 @@ angular.module('news', ['ionic', 'TwitterCtrl', 'FeedController', 'articleContro
     //maxAge: 1000,
     deleteOnExpire: "aggressive"
   });
+
+
 })
 .constant('myAppConfig', {
     oauthSettings: {
@@ -50,7 +59,7 @@ angular.module('news', ['ionic', 'TwitterCtrl', 'FeedController', 'articleContro
       views: {
         'menuContent' :{
           templateUrl: "templates/feeds.html",
-          controller: 'FeedCtrl'
+          controller: 'AllFeedCtrl'
         }
       }
     })    
