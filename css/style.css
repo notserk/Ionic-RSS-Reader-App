@@ -173,8 +173,15 @@ body, h1, h2{
     padding: 5px 50px 10px 50px;
 }
 
-@media (max-width: 1023px){
-    #header > div.buttons{
-        display: none;
-    }
+
+/*T*/
+@media (max-width: 567px){
+
 }
+/* iPads (portrait) ----------- */
+/*@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {*/
+    /* Styles */
+    /*#header > div.buttons{*/
+        /*display: none;*/
+    /*}*/
+/*}*/
