@@ -519,490 +519,515 @@ angular.module('FeedController', ['FeedUtilities', 'RSSFeedService'])
         loadFeed(feed);
     })
 
-    .controller('AllFeedCtrl', function ($scope, $stateParams, $ionicLoading, FeedService, Util, DSCacheFactory) {
+    .controller('AllFeedCtrl', function ($scope, $stateParams, $ionicLoading, FeedService, Util, DSCacheFactory, $rootScope, $cordovaNetwork) {
         //Make a call to get all feeds
+
+        //For some reason this doesn't work. I'm speculating that it's because the libraries didn't load yet.
+        //if(FeedService.checkNetwork())
+        //        alert('online');
+
         var feed = $stateParams.feed;
         $scope.feed = feed;
 
         var cachedFeed = DSCacheFactory.get("FeedStorage");
 
         $ionicLoading.show({template: '<i class=\"ion-refreshing\"></i>'});
-        console.log('yea');
+
         //Make a fresh Http call to set the cache
         FeedService.getAllFeeds()
             .then(
-            function(data){
-                switch(feed)
-                {
-                    case 'releases':
-                        if(cachedFeed.get(feed))
-                        {
-                            $ionicLoading.hide();
-                            $scope.loaded = true;
-                            $scope.stories = cachedFeed.get(feed);
-
-                            $scope.feedTitle = "USAID Press Releases";
-
-                            $scope.parseHTML = function (text) {
-                                var html = Util.ReleasesHTML(text);
-                                return html;
-                            };
-
-                            $scope.formatDate = function(date){
-                                return Util.FormatDate(date);
-                            };
-
-                            $scope.reloadFeed = function(){
-                                FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/press-releases.xml')
-                                    .then(function(refreshedData){
-                                        $scope.stories = refreshedData;
-                                    },
-                                    function(errorData){
-                                        console.error(errorData);
-                                    })
-                                    .finally(function() {
-                                        // Stop the ion-refresher from spinning
-                                        $scope.$broadcast('scroll.refreshComplete');
-                                    });
-                            };
-                        }
-                        else
-                        {
-                            $scope.loaded = true;
-                            $ionicLoading.hide();
-                            $scope.stories = data.releases;
-
-                            cachedFeed.put(feed, data.releases);
-
-                            $scope.feedTitle = "USAID Press Releases";
-
-                            $scope.parseHTML = function (text) {
-                                var html = Util.ReleasesHTML(text);
-                                return html;
-                            };
-
-                            $scope.formatDate = function(date){
-                                return Util.FormatDate(date);
-                            };
-
-                            $scope.reloadFeed = function(){
-                                FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/press-releases.xml')
-                                    .then(function(refreshedData){
-                                        $scope.stories = refreshedData;
-                                    },
-                                    function(errorData){
-                                        console.error(errorData);
-                                    })
-                                    .finally(function() {
-                                        // Stop the ion-refresher from spinning
-                                        $scope.$broadcast('scroll.refreshComplete');
-                                    });
-                            };
-                        }
-                        break;
-                    case 'frontlines':
-
-                        if(cachedFeed.get(feed))
-                        {
-                            $scope.loaded = true;
-                            $ionicLoading.hide();
-                            $scope.stories = cachedFeed.get(feed);
-
-                            $scope.feedTitle = "FrontLines";
-
-                            $scope.parseHTML = function (text) {
-                                var html = Util.ReleasesHTML(text);
-                                return html;
-                            };
-
-                            $scope.formatDate = function(date){
-                                return Util.FormatDate(date);
-                            };
-
-                            $scope.reloadFeed = function(){
-                                FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/news-information/frontlines/46331/rss/')
-                                    .then(function(refreshedData){
-                                        $scope.stories = refreshedData;
-                                    },
-                                    function(errorData){
-                                        console.error(errorData);
-                                    })
-                                    .finally(function() {
-                                        // Stop the ion-refresher from spinning
-                                        $scope.$broadcast('scroll.refreshComplete');
-                                    });
-                            };
-                        }
-                        else
-                        {
-                            $scope.loaded = true;
-                            $ionicLoading.hide();
-                            $scope.stories = data.frontlines;
-
-                            cachedFeed.put(feed, data.frontlines);
-
-                            $scope.feedTitle = "FrontLines";
-
-                            $scope.parseHTML = function (text) {
-                                var html = Util.ReleasesHTML(text);
-                                return html;
-                            };
-
-                            $scope.formatDate = function(date){
-                                return Util.FormatDate(date);
-                            };
-
-                            $scope.reloadFeed = function(){
-                                FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/news-information/frontlines/46331/rss/')
-                                    .then(function(refreshedData){
-                                        $scope.stories = refreshedData;
-                                    },
-                                    function(errorData){
-                                        console.error(errorData);
-                                    })
-                                    .finally(function() {
-                                        // Stop the ion-refresher from spinning
-                                        $scope.$broadcast('scroll.refreshComplete');
-                                    });
-                            };
-                        }
-                        break;
-                    case 'blogs':
-
-                        if(cachedFeed.get(feed))
-                        {
-                            $scope.loaded = true;
-                            $ionicLoading.hide();
-                            $scope.stories = cachedFeed.get(feed);
-
-                            $scope.feedTitle = "Impact Blogs";
-
-                            $scope.parseHTML = function (text) {
-                                var html = Util.ReleasesHTML(text);
-                                return html;
-                            };
-
-                            $scope.formatDate = function(date){
-                                return Util.FormatDate(date);
-                            };
-
-                            $scope.reloadFeed = function(){
-                                FeedService.reloadFeed($scope.feed, 'http://blog.usaid.gov/feed/')
-                                    .then(function(refreshedData){
-                                        $scope.stories = refreshedData;
-                                    },
-                                    function(errorData){
-                                        console.error(errorData);
-                                    })
-                                    .finally(function() {
-                                        // Stop the ion-refresher from spinning
-                                        $scope.$broadcast('scroll.refreshComplete');
-                                    });
-                            };
-                        }
-                        else
-                        {
-                            $scope.loaded = true;
-                            $ionicLoading.hide();
-                            $scope.stories = data.blogs;
-
-                            cachedFeed.put(feed, data.blogs);
-
-                            $scope.feedTitle = "Impact Blogs";
-
-                            $scope.parseHTML = function (text) {
-                                var html = Util.ReleasesHTML(text);
-                                return html;
-                            };
-
-                            $scope.formatDate = function(date){
-                                return Util.FormatDate(date);
-                            };
-
-                            $scope.reloadFeed = function(){
-                                FeedService.reloadFeed($scope.feed, 'http://blog.usaid.gov/feed/')
-                                    .then(function(refreshedData){
-                                        $scope.stories = refreshedData;
-                                    },
-                                    function(errorData){
-                                        console.error(errorData);
-                                    })
-                                    .finally(function() {
-                                        // Stop the ion-refresher from spinning
-                                        $scope.$broadcast('scroll.refreshComplete');
-                                    });
-                            };
-                        }
-                        break;
-                    case 'facts':
-                        if(cachedFeed.get(feed))
-                        {
-                            $scope.loaded = true;
-                            $ionicLoading.hide();
-                            $scope.stories = cachedFeed.get(feed);
-
-                            $scope.feedTitle = "Fact Sheets";
-
-                            $scope.parseHTML = function (text) {
-                                var html = Util.ReleasesHTML(text);
-                                return html;
-                            };
-
-                            $scope.formatDate = function(date){
-                                return Util.FormatDate(date);
-                            };
-
-                            $scope.reloadFeed = function(){
-                                FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/fact-sheets.xml')
-                                    .then(function(refreshedData){
-                                        $scope.stories = refreshedData;
-                                    },
-                                    function(errorData){
-                                        console.error(errorData);
-                                    })
-                                    .finally(function() {
-                                        // Stop the ion-refresher from spinning
-                                        $scope.$broadcast('scroll.refreshComplete');
-                                    });
-                            };
-                        }
-                        else
-                        {
-                            $scope.loaded = true;
-                            $ionicLoading.hide();
-                            $scope.stories = data.facts;
-
-                            cachedFeed.put(feed, data.facts);
-
-                            $scope.feedTitle = "Fact Sheets";
-
-                            $scope.parseHTML = function (text) {
-                                var html = Util.ReleasesHTML(text);
-                                return html;
-                            };
-
-                            $scope.formatDate = function(date){
-                                return Util.FormatDate(date);
-                            };
-
-                            $scope.reloadFeed = function(){
-                                FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/fact-sheets.xml')
-                                    .then(function(refreshedData){
-                                        $scope.stories = refreshedData;
-                                    },
-                                    function(errorData){
-                                        console.error(errorData);
-                                    })
-                                    .finally(function() {
-                                        // Stop the ion-refresher from spinning
-                                        $scope.$broadcast('scroll.refreshComplete');
-                                    });
-                            };
-                        }
-
-                        break;
-                    case 'speeches':
-                        if(cachedFeed.get(feed))
-                        {
-                            $scope.loaded = true;
-                            $ionicLoading.hide();
-                            $scope.stories = cachedFeed.get(feed);
-
-                            $scope.feedTitle = "Administrator Speeches";
-
-                            $scope.parseHTML = function (text) {
-                                var html = Util.ReleasesHTML(text);
-                                return html;
-                            };
-
-                            $scope.formatDate = function(date){
-                                return Util.FormatDate(date);
-                            };
-
-                            $scope.reloadFeed = function(){
-                                FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/speeches.xml')
-                                    .then(function(refreshedData){
-                                        $scope.stories = refreshedData;
-                                    },
-                                    function(errorData){
-                                        console.error(errorData);
-                                    })
-                                    .finally(function() {
-                                        // Stop the ion-refresher from spinning
-                                        $scope.$broadcast('scroll.refreshComplete');
-                                    });
-                            };
-                        }
-                        else
-                        {
-                            $scope.loaded = true;
-                            $ionicLoading.hide();
-                            $scope.stories = data.speeches;
-
-                            cachedFeed.put(feed, data.speeches);
-
-                            $scope.feedTitle = "Administrator Speeches";
-
-                            $scope.parseHTML = function (text) {
-                                var html = Util.ReleasesHTML(text);
-                                return html;
-                            };
-
-                            $scope.formatDate = function(date){
-                                return Util.FormatDate(date);
-                            };
-
-                            $scope.reloadFeed = function(){
-                                FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/speeches.xml')
-                                    .then(function(refreshedData){
-                                        $scope.stories = refreshedData;
-                                    },
-                                    function(errorData){
-                                        console.error(errorData);
-                                    })
-                                    .finally(function() {
-                                        // Stop the ion-refresher from spinning
-                                        $scope.$broadcast('scroll.refreshComplete');
-                                    });
-                            };
-                        }
-
-                        break;
-                    case 'testimonies':
-                        if(cachedFeed.get(feed))
-                        {
-                            $scope.loaded = true;
-                            $ionicLoading.hide();
-                            $scope.stories = cachedFeed.get(feed);
-
-                            $scope.feedTitle = "Congressional Testimonies";
-
-                            $scope.parseHTML = function (text) {
-                                var html = Util.ReleasesHTML(text);
-                                return html;
-                            };
-
-                            $scope.formatDate = function(date){
-                                return Util.FormatDate(date);
-                            };
-
-                            $scope.reloadFeed = function(){
-                                FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/congressional-testimony.xml')
-                                    .then(function(refreshedData){
-                                        $scope.stories = refreshedData;
-                                    },
-                                    function(errorData){
-                                        console.error(errorData);
-                                    })
-                                    .finally(function() {
-                                        // Stop the ion-refresher from spinning
-                                        $scope.$broadcast('scroll.refreshComplete');
-                                    });
-                            };
-                        }
-                        else
-                        {
-                            $scope.loaded = true;
-                            $ionicLoading.hide();
-                            $scope.stories = data.testimonies;
-
-                            cachedFeed.put(feed, data.testimonies);
-
-                            $scope.feedTitle = "Congressional Testimonies";
-
-                            $scope.parseHTML = function (text) {
-                                var html = Util.ReleasesHTML(text);
-                                return html;
-                            };
-
-                            $scope.formatDate = function(date){
-                                return Util.FormatDate(date);
-                            };
-
-                            $scope.reloadFeed = function(){
-                                FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/congressional-testimony.xml')
-                                    .then(function(refreshedData){
-                                        $scope.stories = refreshedData;
-                                    },
-                                    function(errorData){
-                                        console.error(errorData);
-                                    })
-                                    .finally(function() {
-                                        // Stop the ion-refresher from spinning
-                                        $scope.$broadcast('scroll.refreshComplete');
-                                    });
-                            };
-                        }
-                        break;
-                    case 'vacancies':
-                        if(cachedFeed.get(feed))
-                        {
-                            $scope.loaded = true;
-                            $ionicLoading.hide();
-                            $scope.stories = cachedFeed.get(feed);
-
-                            $scope.feedTitle = "Vacancy Announcements";
-
-                            $scope.parseHTML = function (text) {
-                                var html = Util.ReleasesHTML(text);
-                                return html;
-                            };
-
-                            $scope.formatDate = function(date){
-                                return Util.FormatDate(date);
-                            };
-
-                            $scope.reloadFeed = function(){
-                                FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/work-with-us/careers/vacancy-announcements')
-                                    .then(function(refreshedData){
-                                        $scope.stories = refreshedData;
-                                    },
-                                    function(errorData){
-                                        console.error(errorData);
-                                    })
-                                    .finally(function() {
-                                        // Stop the ion-refresher from spinning
-                                        $scope.$broadcast('scroll.refreshComplete');
-                                    });
-                            };
-                        }
-                        else
-                        {
-                            $scope.loaded = true;
-                            $ionicLoading.hide();
-                            $scope.stories = data.vacancies;
-
-                            cachedFeed.put(feed, data.vacancies);
-
-                            $scope.feedTitle = "Vacancy Announcements";
-
-                            $scope.parseHTML = function (text) {
-                                var html = Util.ReleasesHTML(text);
-                                return html;
-                            };
-
-                            $scope.formatDate = function(date){
-                                return Util.FormatDate(date);
-                            };
-
-                            $scope.reloadFeed = function(){
-                                FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/work-with-us/careers/vacancy-announcements')
-                                    .then(function(refreshedData){
-                                        $scope.stories = refreshedData;
-                                    },
-                                    function(errorData){
-                                        console.error(errorData);
-                                    })
-                                    .finally(function() {
-                                        // Stop the ion-refresher from spinning
-                                        $scope.$broadcast('scroll.refreshComplete');
-                                    });
-                            };
-                        }
-                        break;
-                }
-            },
-            function(error){
-                console.error(error)
-            });
+                function(data){
+                    switch(feed)
+                    {
+                        case 'releases':
+
+                            if(cachedFeed.get(feed))
+                            {
+                                $ionicLoading.hide();
+                                $scope.loaded = true;
+                                $scope.stories = cachedFeed.get(feed);
+
+                                $scope.feedTitle = "USAID Press Releases";
+
+                                $scope.parseHTML = function (text) {
+                                    var html = Util.ReleasesHTML(text);
+                                    return html;
+                                };
+
+                                $scope.formatDate = function(date){
+                                    return Util.FormatDate(date);
+                                };
+
+                                $scope.reloadFeed = function(){
+                                    FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/press-releases.xml')
+                                        .then(function(refreshedData){
+                                            $scope.stories = refreshedData;
+                                        },
+                                        function(errorData){
+                                            console.error(errorData);
+                                        })
+                                        .finally(function() {
+                                            // Stop the ion-refresher from spinning
+                                            $scope.$broadcast('scroll.refreshComplete');
+                                        });
+                                };
+                            }
+                            else
+                            {
+                                $scope.loaded = true;
+                                $ionicLoading.hide();
+                                $scope.stories = data.releases;
+
+                                cachedFeed.put(feed, data.releases);
+
+                                $scope.feedTitle = "USAID Press Releases";
+
+                                $scope.parseHTML = function (text) {
+                                    var html = Util.ReleasesHTML(text);
+                                    return html;
+                                };
+
+                                $scope.formatDate = function(date){
+                                    return Util.FormatDate(date);
+                                };
+
+                                $scope.reloadFeed = function(){
+                                    FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/press-releases.xml')
+                                        .then(function(refreshedData){
+                                            $scope.stories = refreshedData;
+                                        },
+                                        function(errorData){
+                                            console.error(errorData);
+                                        })
+                                        .finally(function() {
+                                            // Stop the ion-refresher from spinning
+                                            $scope.$broadcast('scroll.refreshComplete');
+                                        });
+                                };
+                            }
+                            break;
+                        case 'frontlines':
+
+                            if(cachedFeed.get(feed))
+                            {
+                                $scope.loaded = true;
+                                $ionicLoading.hide();
+                                $scope.stories = cachedFeed.get(feed);
+
+                                $scope.feedTitle = "FrontLines";
+
+                                $scope.parseHTML = function (text) {
+                                    var html = Util.ReleasesHTML(text);
+                                    return html;
+                                };
+
+                                $scope.formatDate = function(date){
+                                    return Util.FormatDate(date);
+                                };
+
+                                $scope.reloadFeed = function(){
+                                    FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/news-information/frontlines/46331/rss/')
+                                        .then(function(refreshedData){
+                                            $scope.stories = refreshedData;
+                                        },
+                                        function(errorData){
+                                            console.error(errorData);
+                                        })
+                                        .finally(function() {
+                                            // Stop the ion-refresher from spinning
+                                            $scope.$broadcast('scroll.refreshComplete');
+                                        });
+                                };
+                            }
+                            else
+                            {
+                                $scope.loaded = true;
+                                $ionicLoading.hide();
+                                $scope.stories = data.frontlines;
+
+                                cachedFeed.put(feed, data.frontlines);
+
+                                $scope.feedTitle = "FrontLines";
+
+                                $scope.parseHTML = function (text) {
+                                    var html = Util.ReleasesHTML(text);
+                                    return html;
+                                };
+
+                                $scope.formatDate = function(date){
+                                    return Util.FormatDate(date);
+                                };
+
+                                $scope.reloadFeed = function(){
+                                    FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/news-information/frontlines/46331/rss/')
+                                        .then(function(refreshedData){
+                                            $scope.stories = refreshedData;
+                                        },
+                                        function(errorData){
+                                            console.error(errorData);
+                                        })
+                                        .finally(function() {
+                                            // Stop the ion-refresher from spinning
+                                            $scope.$broadcast('scroll.refreshComplete');
+                                        });
+                                };
+                            }
+                            break;
+                        case 'blogs':
+                            if(cachedFeed.get(feed))
+                            {
+                                $scope.loaded = true;
+                                $ionicLoading.hide();
+                                $scope.stories = cachedFeed.get(feed);
+
+                                $scope.feedTitle = "Impact Blogs";
+
+                                $scope.parseHTML = function (text) {
+                                    var html = Util.ReleasesHTML(text);
+                                    return html;
+                                };
+
+                                $scope.formatDate = function(date){
+                                    return Util.FormatDate(date);
+                                };
+
+                                $scope.reloadFeed = function(){
+                                    FeedService.reloadFeed($scope.feed, 'http://blog.usaid.gov/feed/')
+                                        .then(function(refreshedData){
+                                            $scope.stories = refreshedData;
+                                        },
+                                        function(errorData){
+                                            console.error(errorData);
+                                        })
+                                        .finally(function() {
+                                            // Stop the ion-refresher from spinning
+                                            $scope.$broadcast('scroll.refreshComplete');
+                                        });
+                                };
+                            }
+                            else
+                            {
+                                $scope.loaded = true;
+                                $ionicLoading.hide();
+                                $scope.stories = data.blogs;
+
+                                cachedFeed.put(feed, data.blogs);
+
+                                $scope.feedTitle = "Impact Blogs";
+
+                                $scope.parseHTML = function (text) {
+                                    var html = Util.ReleasesHTML(text);
+                                    return html;
+                                };
+
+                                $scope.formatDate = function(date){
+                                    return Util.FormatDate(date);
+                                };
+
+                                $scope.reloadFeed = function(){
+                                    FeedService.reloadFeed($scope.feed, 'http://blog.usaid.gov/feed/')
+                                        .then(function(refreshedData){
+                                            $scope.stories = refreshedData;
+                                        },
+                                        function(errorData){
+                                            console.error(errorData);
+                                        })
+                                        .finally(function() {
+                                            // Stop the ion-refresher from spinning
+                                            $scope.$broadcast('scroll.refreshComplete');
+                                        });
+                                };
+                            }
+                            break;
+                        case 'facts':
+                            if(cachedFeed.get(feed))
+                            {
+                                $scope.loaded = true;
+                                $ionicLoading.hide();
+                                $scope.stories = cachedFeed.get(feed);
+
+                                $scope.feedTitle = "Fact Sheets";
+
+                                $scope.parseHTML = function (text) {
+                                    var html = Util.ContentSnippet(text);
+                                    return html;
+                                };
+
+                                $scope.formatDate = function(date){
+                                    return Util.FormatDate(date);
+                                };
+
+                                $scope.reloadFeed = function(){
+                                    FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/fact-sheets.xml')
+                                        .then(function(refreshedData){
+                                            $scope.stories = refreshedData;
+                                        },
+                                        function(errorData){
+                                            console.error(errorData);
+                                        })
+                                        .finally(function() {
+                                            // Stop the ion-refresher from spinning
+                                            $scope.$broadcast('scroll.refreshComplete');
+                                        });
+                                };
+                            }
+                            else
+                            {
+                                $scope.loaded = true;
+                                $ionicLoading.hide();
+                                $scope.stories = data.facts;
+
+                                cachedFeed.put(feed, data.facts);
+
+                                $scope.feedTitle = "Fact Sheets";
+
+                                $scope.parseHTML = function (text) {
+                                    var html = Util.ContentSnippet(text);
+                                    return html;
+                                };
+
+                                $scope.formatDate = function(date){
+                                    return Util.FormatDate(date);
+                                };
+
+                                $scope.reloadFeed = function(){
+                                    FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/fact-sheets.xml')
+                                        .then(function(refreshedData){
+                                            $scope.stories = refreshedData;
+                                        },
+                                        function(errorData){
+                                            console.error(errorData);
+                                        })
+                                        .finally(function() {
+                                            // Stop the ion-refresher from spinning
+                                            $scope.$broadcast('scroll.refreshComplete');
+                                        });
+                                };
+                            }
+
+                            break;
+                        case 'speeches':
+                            if(cachedFeed.get(feed))
+                            {
+                                $scope.loaded = true;
+                                $ionicLoading.hide();
+                                $scope.stories = cachedFeed.get(feed);
+
+                                $scope.feedTitle = "Administrator Speeches";
+
+                                $scope.parseHTML = function (text) {
+                                    var html = Util.ContentSnippet(text);
+                                    return html;
+                                };
+
+                                $scope.formatDate = function(date){
+                                    return Util.FormatDate(date);
+                                };
+
+                                $scope.reloadFeed = function(){
+                                    FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/speeches.xml')
+                                        .then(function(refreshedData){
+                                            $scope.stories = refreshedData;
+                                        },
+                                        function(errorData){
+                                            console.error(errorData);
+                                        })
+                                        .finally(function() {
+                                            // Stop the ion-refresher from spinning
+                                            $scope.$broadcast('scroll.refreshComplete');
+                                        });
+                                };
+                            }
+                            else
+                            {
+                                $scope.loaded = true;
+                                $ionicLoading.hide();
+                                $scope.stories = data.speeches;
+
+                                cachedFeed.put(feed, data.speeches);
+
+                                $scope.feedTitle = "Administrator Speeches";
+
+                                $scope.parseHTML = function (text) {
+                                    var html = Util.ContentSnippet(text);
+                                    return html;
+                                };
+
+                                $scope.formatDate = function(date){
+                                    return Util.FormatDate(date);
+                                };
+
+                                $scope.reloadFeed = function(){
+                                    FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/speeches.xml')
+                                        .then(function(refreshedData){
+                                            $scope.stories = refreshedData;
+                                        },
+                                        function(errorData){
+                                            console.error(errorData);
+                                        })
+                                        .finally(function() {
+                                            // Stop the ion-refresher from spinning
+                                            $scope.$broadcast('scroll.refreshComplete');
+                                        });
+                                };
+                            }
+
+                            break;
+                        case 'testimonies':
+                            if(cachedFeed.get(feed))
+                            {
+                                $scope.loaded = true;
+                                $ionicLoading.hide();
+                                $scope.stories = cachedFeed.get(feed);
+
+                                $scope.feedTitle = "Congressional Testimonies";
+
+                                $scope.parseHTML = function (text) {
+                                    var html = Util.ContentSnippet(text);
+                                    return html;
+                                };
+
+                                $scope.formatDate = function(date){
+                                    return Util.FormatDate(date);
+                                };
+
+                                $scope.reloadFeed = function(){
+                                    FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/congressional-testimony.xml')
+                                        .then(function(refreshedData){
+                                            $scope.stories = refreshedData;
+                                        },
+                                        function(errorData){
+                                            console.error(errorData);
+                                        })
+                                        .finally(function() {
+                                            // Stop the ion-refresher from spinning
+                                            $scope.$broadcast('scroll.refreshComplete');
+                                        });
+                                };
+                            }
+                            else
+                            {
+                                $scope.loaded = true;
+                                $ionicLoading.hide();
+                                $scope.stories = data.testimonies;
+
+                                cachedFeed.put(feed, data.testimonies);
+
+                                $scope.feedTitle = "Congressional Testimonies";
+
+                                $scope.parseHTML = function (text) {
+                                    var html = Util.ContentSnippet(text);
+                                    return html;
+                                };
+
+                                $scope.formatDate = function(date){
+                                    return Util.FormatDate(date);
+                                };
+
+                                $scope.reloadFeed = function(){
+                                    FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/congressional-testimony.xml')
+                                        .then(function(refreshedData){
+                                            $scope.stories = refreshedData;
+                                        },
+                                        function(errorData){
+                                            console.error(errorData);
+                                        })
+                                        .finally(function() {
+                                            // Stop the ion-refresher from spinning
+                                            $scope.$broadcast('scroll.refreshComplete');
+                                        });
+                                };
+                            }
+                            break;
+                        case 'vacancies':
+                            if(cachedFeed.get(feed))
+                            {
+                                $scope.loaded = true;
+                                $ionicLoading.hide();
+                                $scope.stories = cachedFeed.get(feed);
+
+                                $scope.feedTitle = "Vacancy Announcements";
+
+                                $scope.parseHTML = function (text) {
+                                    var html = Util.ContentSnippet(text);
+                                    return html;
+                                };
+
+                                $scope.formatDate = function(date){
+                                    return Util.FormatDate(date);
+                                };
+
+                                $scope.reloadFeed = function(){
+                                    FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/work-with-us/careers/vacancy-announcements.xml')
+                                        .then(function(refreshedData){
+                                            $scope.stories = refreshedData;
+                                        },
+                                        function(errorData){
+                                            console.error(errorData);
+                                        })
+                                        .finally(function() {
+                                            // Stop the ion-refresher from spinning
+                                            $scope.$broadcast('scroll.refreshComplete');
+                                        });
+                                };
+                            }
+                            else
+                            {
+                                $scope.loaded = true;
+                                $ionicLoading.hide();
+                                $scope.stories = data.vacancies;
+
+                                cachedFeed.put(feed, data.vacancies);
+
+                                $scope.feedTitle = "Vacancy Announcements";
+
+                                $scope.parseHTML = function (text) {
+                                    var html = Util.ContentSnippet(text);
+                                    return html;
+                                };
+
+                                $scope.formatDate = function(date){
+                                    return Util.FormatDate(date);
+                                };
+
+                                $scope.reloadFeed = function(){
+                                    FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/work-with-us/careers/vacancy-announcements.xml')
+                                        .then(function(refreshedData){
+                                            $scope.stories = refreshedData;
+                                        },
+                                        function(errorData){
+                                            console.error(errorData);
+                                        })
+                                        .finally(function() {
+                                            // Stop the ion-refresher from spinning
+                                            $scope.$broadcast('scroll.refreshComplete');
+                                        });
+                                };
+                            }
+                            break;
+                    }
+                },
+                function(error){
+                $ionicLoading.hide();
+                console.log(error);
+                $scope.failed = true;
+
+                //$scope.reloadFeed = function(){
+                //    $ionicLoading.show({template: '<i class=\"ion-refreshing\"></i>'});
+                //    FeedService.reloadFeed($scope.feed, 'http://www.usaid.gov/rss/press-releases.xml')
+                //        .then(function(refreshedData){
+                //            $ionicLoading.hide();
+                //            $scope.stories = refreshedData;
+                //        },
+                //        function(errorData){
+                //            $ionicLoading.hide();
+                //            console.error(errorData);
+                //        })
+                //        .finally(function() {
+                //            // Stop the ion-refresher from spinning
+                //            $scope.$broadcast('scroll.refreshComplete');
+                //        });
+                //};
+            }
+            );
     });

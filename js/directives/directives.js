@@ -1,7 +1,7 @@
 /**
  * Created by kshirley on 12/1/14.
  */
-angular.module('feedDirectives', [])
+angular.module('feedDirectives', ['FeedUtilities', 'RSSFeedService'])
     .directive('pressRelease', function(){
         return{
             restrict: 'E',
@@ -9,7 +9,10 @@ angular.module('feedDirectives', [])
             link: function($scope, element, attrs){
 
             },
-            scope: true
+            scope: true,
+            controller: function($scope, $stateParams, $ionicLoading, FeedService, Util, DSCacheFactory, $rootScope, $cordovaNetwork){
+                console.log($stateParams.feed);
+            }
         };
     })
     .directive('frontLines', function(){
@@ -71,7 +74,7 @@ angular.module('feedDirectives', [])
                 element.on('click', function(e){
 
                     var twitterLink = 'https://twitter.com/USAID/status/';
-                    window.open(twitterLink + attrs.url, '_system');
+                    window.open(twitterLink + attrs.url, '_blank');
                     e.preventDefault();
                 });
             },

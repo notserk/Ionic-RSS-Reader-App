@@ -24,17 +24,19 @@ angular.module('news', ['ionic', 'TwitterCtrl', 'FeedController', 'articleContro
         alert(offlineState);
     });
 
+    $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+        var offlineState = networkState;
+        alert(offlineState);
+    });
 
-        //$cordovaSplashscreen.hide();
-  DSCacheFactory("FeedStorage",
-  {
-    storageMode: "localStorage",
-    maxAge: 900000,
-    //maxAge: 1000,
-    deleteOnExpire: "aggressive"
-  });
-
-
+    //$cordovaSplashscreen.hide();
+    DSCacheFactory("FeedStorage",
+    {
+        storageMode: "localStorage",
+        maxAge: 900000,
+        //maxAge: 1000,
+        deleteOnExpire: "aggressive"
+    });
 })
 .constant('myAppConfig', {
     oauthSettings: {

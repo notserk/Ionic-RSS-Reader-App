@@ -7,8 +7,8 @@ body, h1, h2{
     font-family: 'Abel', sans-serif;;
 }
 
-#header{
-	background-color: white;
+#header, .nav-bar-container div ion-header-bar{
+	/*background-color: white;*/
 	color: #C2113A;
 	background: linear-gradient(#cccccc, #f2f2f2);
 }
@@ -178,10 +178,11 @@ body, h1, h2{
 @media (max-width: 567px){
 
 }
-/* iPads (portrait) ----------- */
-/*@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {*/
-    /* Styles */
-    /*#header > div.buttons{*/
-        /*display: none;*/
-    /*}*/
-/*}*/
+ /*iPads (portrait) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+
+    /*Hide the menu button while the menu is exposed in tablet mode*/
+     ion-header-bar > div.buttons.buttons-left{
+        display: none;
+    }
+}

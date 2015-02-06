@@ -52,7 +52,6 @@ angular.module('FeedUtilities', [])
                     cleanText = cleanText.replace(/.?(Language.+\n\sUndefined)/g, '');
 
                     return cleanText;
-
                 }
             },
 

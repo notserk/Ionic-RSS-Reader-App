@@ -1,9 +1,9 @@
-<div ng-if="loaded">
+<div>
     <ion-refresher
             pulling-text="Pull to refresh..."
             on-refresh="reloadFeed()">
     </ion-refresher>
-    <ion-list >
+    <ion-list>
         <ion-item ng-class="{pressReleases: class}" ng-repeat="story in stories" ng-href="#/app/feeds/{{feed}}/{{$index}}">
             <!-- <a>{{story.title}}</a>
             <h3>{{story.publishedDate | date:'yyyy'}}</h3> -->
@@ -15,8 +15,9 @@
             <h5>{{formatDate(story.publishedDate)}}</h5>
         </ion-item>
     </ion-list>
-</div>
-<div ng-if="failed">
-    <p class="connection-failed"><a class="button icon-left ion-refresh button-clear button-dark connection-failed" ng-click="reload()">Connection Failed, Push to Refresh</a>
-    </p>
+    <!--<div ng-if="failed">-->
+        <!--<p class="connection-failed">-->
+            <!--<a class="button icon-left ion-refresh button-clear button-dark connection-failed" ng-click="reloadFeed()">Connection Failed, Push to Refresh</a>-->
+        <!--</p>-->
+    <!--</div>-->
 </div>

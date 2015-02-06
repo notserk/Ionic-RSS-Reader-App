@@ -1,4 +1,4 @@
-angular.module('RSSFeedService', [])
+angular.module('RSSFeedService', ['ngCordova'])
     .factory('FeedService',function($http, $q, DSCacheFactory, $cordovaNetwork){
         return {
             parseFeed : function(url, feed){
@@ -96,9 +96,8 @@ angular.module('RSSFeedService', [])
                         //timeout: 1000
                     })
                     .then(function(response){
-                        cacheFeed.put(url, response.data.responseData.feed.entries);
-                        console.dir(response);
-                        deferred.resolve(cacheFeed.get(url));
+                        cacheFeed.put(name, response.data.responseData.feed.entries);
+                        deferred.resolve(cacheFeed.get(name));
                     }, function(error){
                         deferred.reject('Connection Failed');
                     });
