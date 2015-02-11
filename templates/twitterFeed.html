@@ -1,4 +1,7 @@
-<ion-view ng-show="loaded" title='<img class="logo" src="./img/USAID-logo3.png">' id="header">
+<ion-view id="header">
+    <ion-nav-title>
+        <img width="130px" height="48px" src="./img/USAID-logo3.png">
+    </ion-nav-title>
     <ion-header-bar class="bar-subheader">
         <h1 class="title">{{feedTitle}}</h1>
     </ion-header-bar>
@@ -22,6 +25,3 @@
         </div>
     </ion-content>
 </ion-view>
-<div ng-show="failed">
-    <a class="button icon-left ion-refresh button-clear button-dark" ng-click="reload()">Refresh</a>
-</div>

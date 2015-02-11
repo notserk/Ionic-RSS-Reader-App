@@ -16,18 +16,21 @@ angular.module('news', ['ionic', 'TwitterCtrl', 'FeedController', 'articleContro
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-  });
 
-    // listen for Offline event
     $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
-        var offlineState = networkState;
-        alert(offlineState);
+      var offlineState = networkState;
+      alert(offlineState);
     });
 
     $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
-        var offlineState = networkState;
-        alert(offlineState);
+      var offlineState = networkState;
+      alert(offlineState);
     });
+
+  });
+
+    // listen for Offline event
+
 
     //$cordovaSplashscreen.hide();
     DSCacheFactory("FeedStorage",

@@ -27,7 +27,6 @@ angular.module('RSSFeedService', ['ngCordova'])
                 }
                 return deferred.promise;
             },
-
             getAllFeeds: function(){
 
                 var urls = [
@@ -63,28 +62,34 @@ angular.module('RSSFeedService', ['ngCordova'])
 
                 var promiseObject = {};
 
+                var cacheFeed = DSCacheFactory.get("FeedStorage");
 
                 angular.forEach(urls, function(url){
                     var deffered = $q.defer();
-                    $http.jsonp('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&callback=JSON_CALLBACK&q=' + encodeURIComponent(url.url), {
-                        timeout: 15000
-                        //timeout: 1000
-                    })
-                    .then(function(response){
-                        //cacheFeed.put(url.name, response.data.responseData.feed.entries);
-                        deffered.resolve(response.data.responseData.feed.entries);
 
-                    }, function(error){
-                        deffered.reject(error);
-                    });
+                    if(cacheFeed.get(url.name)){
+                        deffered.resolve(cacheFeed.get(url.name));
+                    }
+                    else
+                    {
+                        //If not cached and there's internet make the http call!
+                        $http.jsonp('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&callback=JSON_CALLBACK&q=' + encodeURIComponent(url.url), {
+                            timeout: 15000
+                            //timeout: 1000
+                        })
+                        .then(function(response){
+                            cacheFeed.put(url.name, response.data.responseData.feed.entries);
+                            deffered.resolve(response.data.responseData.feed.entries);
 
-                    //promises.push(deffered.promise);
+                        }, function(error){
+                            deffered.reject(error);
+                        });
+                        //promises.push(deffered.promise);
+                    }
                     promiseObject[url.name] = deffered.promise;
                 });
-
                 return $q.all(promiseObject);
             },
-
             reloadFeed: function(name, url){
 
                 var deferred = $q.defer();

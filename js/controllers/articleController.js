@@ -30,7 +30,7 @@ angular.module('articleController', ['FeedUtilities', 'RSSFeedService'])
                     var html =  response[id].content;
                     $scope.stories = Util.FormatHTML(html);
                     $scope.feedTitle = response[id].title;
-                    $scope.link = false;
+                    $scope.link = response[id].link;
                 }, function(error){
                     //Indicate an error
                 });
@@ -68,26 +68,24 @@ angular.module('articleController', ['FeedUtilities', 'RSSFeedService'])
                     var html = response[id].content;
                     $scope.stories = Util.FormatHTML(html);
                     $scope.feedTitle = response[id].title;
-                    $scope.link = false;
+                    $scope.link = response[id].link;
                     $('#loading').hide();
                 }, function(error){
                     //Indicate an error
                 });
             break;
-
         case 'speeches':
             FeedService.parseFeed('http://www.usaid.gov/rss/speeches.xml', feed)
                 .then(function(response){
                     var html = response[id].content;
                     $scope.stories = Util.FormatHTML(html);
                     $scope.feedTitle = response[id].title;
-                    $scope.link = false;
+                    $scope.link = response[id].link;
                     $('#loading').hide();
                 }, function(error){
                     //Indicate an error
                 });
             break;
-
         case 'facts':
             FeedService.parseFeed('http://www.usaid.gov/rss/fact-sheets.xml', feed)
                 .then(function(response){
@@ -106,7 +104,6 @@ angular.module('articleController', ['FeedUtilities', 'RSSFeedService'])
                     //Indicate an error
                 });
             break;
-
         case 'blogs':
             FeedService.parseFeed('http://blog.usaid.gov/feed/', feed)
                 .then(function(response){

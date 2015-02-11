@@ -2,7 +2,7 @@ angular.module('TwitterCtrl', ['TwitterService'])
 
     //Controller that handles Twitter Screen
     .controller('TwitterCtrl', function($http, $scope, TwitterLib, $ionicLoading){
-        $ionicLoading.show({template: '<i class=\"ion-refreshing\"></i>'});
+        //$ionicLoading.show({template: '<i class=\"ion-refreshing\"></i>'});
         var options =
         {
             url: "https://api.twitter.com/1.1/statuses/user_timeline.json",
@@ -19,7 +19,7 @@ angular.module('TwitterCtrl', ['TwitterService'])
 
                 $scope.items = _data;
                 $scope.feedTitle = 'Twitter Feed';
-                $ionicLoading.hide();
+                //$ionicLoading.hide();
                 $scope.loaded = true;
                 $scope.failed = false;
 
