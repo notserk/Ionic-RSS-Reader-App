@@ -30,7 +30,7 @@ angular.module('articleController', ['FeedUtilities', 'RSSFeedService'])
                     var html =  response[id].content;
                     $scope.stories = Util.FormatHTML(html);
                     $scope.feedTitle = response[id].title;
-                    $scope.link = response[id].link;
+                    $scope.link = false;
                 }, function(error){
                     //Indicate an error
                 });
